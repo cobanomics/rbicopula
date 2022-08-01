@@ -1,0 +1,4 @@
+v 3
+d Mustafa Coban, Institute for Employment Research, mustafa.coban@iab.de, mustafacoban.de
+
+p rbicopula Estimation of recursive bivariate copula regressions

@@ -1,0 +1,24 @@
+v 3
+d rbicopula: Stata module to estimate recursive bivariate copula regressions
+d
+d {cmd:rbicopula} is a user-written command that fits a recursive
+d bivariate copula regression using maximum likelihood estimation.
+d The model involves an outcome equation and a treatment equation,
+d whereas the treatment variable is an endogenous explanatory
+d variable of the outcome equation. Both dependent variables have
+d to be binary.
+d
+d Distribution-Date: 20220801
+d
+d Author:  Mustafa Coban, Institute for Employment Research (Germany)
+d Support: email mustafa.coban@iab.de
+d
+f ado\rbicopula.ado
+f ado\rbicopula.sthlp
+f ado\rbicopula_lf1.ado
+f ado\rbicopula_margdec.ado
+f ado\rbicopula_margdec.sthlp
+f ado\rbicopula_p.ado
+f ado\rbicopula_postestimation.sthlp
+f ado\rbicopula_tmeffects.ado
+f ado\rbicopula_tmeffects.sthlp
