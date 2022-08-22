@@ -182,7 +182,7 @@ Margins are statistics calculated from predictions of a previously fit model by 
 Capabilities include estimated marginal means, least-squares means, average and conditional marginal and partial effects (which may be reported as derivatives or as elasticities), average and conditional adjusted predictions, and predictive margins. For estimation of margins of responses for specified values of the treatment variable _depvar_en_, please use `rbicopula tmeffects`. `rbicopula margdec` won't deliver results in this case.
 
 
-#### <p style="color:red;">CAUTION: Limitations of `margins` after rbicopula</p>
+#### <span style="color: red">CAUTION: Limitations of `margins` after rbicopula</span>
 
 Do not use `margins` after you have fit your model by using `rbicopula` if your are interested in marginal means, predictive margins, marginal effects or average marginal effects. `margins` doesn't account for the recursive nature of the model and will deliver __incorrect point estimates__ and / or __incorrect standard errors__ of the point estimates.
 
