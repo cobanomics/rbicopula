@@ -610,7 +610,7 @@ net install rbicopula, from("https://cobanomics.github.io/rbicopula/")
 
 __10oct2022 (version 1.1.0)__
 * `rbicopula margdec`
-  - Applicable to all copula functions except the Gaussian copula
-<br />
+   * Applicable to all copula functions except the Gaussian copula
+
 * `rbicopula tmeffects`
-  - Applicable to all copula functions except the Gaussian copula
+   * Applicable to all copula functions except the Gaussian copula
