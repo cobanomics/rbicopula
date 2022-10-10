@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 1.0.0: 31jul2022}{...}
+{* *! version 1.1.0: 10oct2022}{...}
 {vieweralsosee "[R] margins" "mansection R margins"}{...}
 {vieweralsosee "" "--"}{...}
 {vieweralsosee "[R] marginsplot" "help marginsplot"}{...}

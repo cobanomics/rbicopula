@@ -168,7 +168,11 @@ Effecttype | Description
 `atet`  |  `rbicopula tmeffects` reports the __average treatment effect on the treated__, i.e. the finite difference between Pr(depvar=1,depvar_en=1) given depvar_en=1 and Pr(depvar=1,depvar_en=1) given depvar_en=0, computed and averaged only for the treated observations. Thus, atet is the difference between the joint probability of outcome and treatment success conditioned on treatment success and the joint probability of outcome and treatment success conditioned on treatment failure.
 `atec`  | `rbicopula tmeffects` reports the __average treatment effect on the conditional probability__, i.e. the finite difference between Pr(depvar=1\|depvar_en=1) and Pr(depvar=1\|depvar_en=0). Thus, atec is the difference between the conditional (on treatment success) probability of outcome success and the conditional (on treatment failure) probability of outcome success.
 
-
+#### NOTE:
+Currently, treatment effects cannot be estimated for the Gaussian copula. Please use `rbiprobit` command instead. You can download `rbiprobit` from SSC archive using the following command in Stata
+```git
+ssc install rbiprobit
+```
 
 
 ## 4. Marginal Effects
@@ -236,16 +240,11 @@ Effecttype | Description
 `effect(indirect)`  | rbicopula margdec reports derivatives of the response with respect to varlist from `dydx(varlist)`, `eyex(varlist)`, `dyex(varlist)`, or `eydx(varlist)`, considering only the incorporation of varlist in _indepvars_en_ and not taking into account the appearance of varlist in _indepvars_.
 
 
-#### IMPORTANT:
-Currently, treatment effects can only be estimated for the following copula functions:
-
-Applicable Option | Copula Function
------------------ | ---------------
-`copula(product)`  |  Product Copula
-`copula(fgm)`  |  Farlie-Gumbel-Morgenstern Copula
-`copula(plackett)`  |  Plackett Copula
-`copula(clayton)`  |  Clayton Copula
-`copula(frank)`  |  Frank Copula
+#### NOTE:
+Currently, marginal effects cannot be estimated for the Gaussian copula. Please use `rbiprobit` command instead. You can download `rbiprobit` from SSC archive using the following command in Stata
+```git
+ssc install rbiprobit
+```
 
 
 
@@ -608,3 +607,10 @@ net install rbicopula, from("https://cobanomics.github.io/rbicopula/")
 ```
 
 ## 9. Changelog
+
+__10oct2022 (version 1.1.0)__
+* `rbicopula margdec`
+  - Applicable to all copula functions except the Gaussian copula
+<br />
+* `rbicopula tmeffects`
+  - Applicable to all copula functions except the Gaussian copula

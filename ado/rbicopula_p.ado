@@ -1,4 +1,4 @@
-*! version 1.0.0 , 01aug2022
+*! version 1.1.0 , 10oct2022
 *! Author: Mustafa Coban, Institute for Employment Research (Germany)
 *! Website: mustafacoban.de
 *! Support: mustafa.coban@iab.de
@@ -335,14 +335,15 @@ program define rbicopula_p, eclass
 							(`v'^2*`vtil') -`eta'*(`A'- (2*`d1Ad1tet') - 1)))
 		}
 		if "`copfc'" == "gumbel"{
-
+			local d1Ad1tet	(`util'^(`tet')*ln(`util') + `vtil'^(`tet')*ln(`vtil'))
+			local d2Ad2tet	(`util'^(`tet')*ln(`util')^2 + `vtil'^(`tet')*ln(`vtil')^2)
 		}
 		if "`copfc'" == "joe"{
-
+			local d1Ad1tet	(`util'^(`tet')*ln(`util')*(1-`vtil'^(`tet')) ///
+							+ `vtil'^(`tet')*ln(`vtil')*(1-`util'^(`tet')))
+			local d2Ad2tet 	(ln(`util')*(`d1Ad1tet' - `vtil'^(`tet')*ln(`vtil')) ///
+							+ ln(`vtil')*(`d1Ad1tet' - `util'^(`tet')*ln(`util')))
 		}
-		if "`copfc'" == "amh"{
-
-		}	
 		
 		
 		
@@ -376,15 +377,19 @@ program define rbicopula_p, eclass
 			local d1copd1tet	((`tettil'^2)*ln(`A') - (`tettil'/`A')*`d1Ad1tet')	
 		}
 		if "`copfc'" == "gumbel"{
-			local d1copd1u 		()
-			local d1copd1v		()
-			local d1copd1tet	()	
+			local d1copd1u 		(`cop'*(`A'^(`tettil'-1)*`util'^(`tet'-1))/`u')
+			local d1copd1v		(`cop'*(`A'^(`tettil'-1)*`vtil'^(`tet'-1))/`v')
+			local d1copd1tet	(`tettil'*`A'^(`tettil')*`cop'*(`tettil'*ln(`A') - (`d1Ad1tet'/`A')))	
 		}
 		if "`copfc'" == "joe"{
-
+			local d1copd1u 		(`A'^(`tettil'-1)*`util'^(`tet'-1)*(1-`vtil'^(`tet')))
+			local d1copd1v		(`A'^(`tettil'-1)*`vtil'^(`tet'-1)*(1-`util'^(`tet')))
+			local d1copd1tet	(`tettil'^2*`A'^(`tettil')*ln(`A') - `tettil'*`A'^(`tettil'-1)*`d1Ad1tet')
 		}
 		if "`copfc'" == "amh"{
-
+			local d1copd1u 		((`v'/`A') - `u'*`v'*`tet'*(`vtil'/(`A'^2)))
+			local d1copd1v		((`u'/`A') - `u'*`v'*`tet'*(`util'/(`A'^2)))
+			local d1copd1tet	(`u'*`v'*`util'*(`vtil'/(`A'^2)))	
 		}	
 		
 		
@@ -453,13 +458,46 @@ program define rbicopula_p, eclass
 								`tettil'*((`d2Ad2tet'/`A') - 2*(`tettil'^2)*ln(`A')))
 		}
 		if "`copfc'" == "gumbel"{
-
+			local d2copd2u		(((1-`tet')/(`util'*`u'))*`d1copd1u'*(1 - (`util'^(`tet')/`A')) ///
+								+ ((`d1copd1u'^2)/`cop') - (`d1copd1u'/`u'))	
+			local d2copd1ud1v	((`util'^(`tet'-1)/(`A'*`u'))*`d1copd1v'*(`A'^(`tettil') - 1 + `tet'))
+			local d2copd1ud1tet	((`d1copd1u'*`d1copd1tet'/`cop')*(1 - `A'^(-`tettil')) ///
+								- `d1copd1u'*((`d1Ad1tet'/`A') - ln(`util')))
+		
+			local d2copd2v		(((1-`tet')/(`vtil'*`v'))*`d1copd1v'*(1 - (`vtil'^(`tet')/`A')) ///
+								+ (`d1copd1v'^2/`cop') - (`d1copd1v'/`v'))	
+			local d2copd1vd1tet	((`d1copd1v'*`d1copd1tet'/`cop')*(1 - `A'^(-`tettil')) ///
+								- `d1copd1v'*((`d1Ad1tet'/`A') - ln(`vtil')))
+			
+			local d2copd2tet	((`d1copd1tet'^2/`cop')*(1 - `A'^(-`tettil')) ///
+								- 2*`tettil'*`d1copd1tet' + (`tettil'*`A'^(`tettil'-1)*`cop')*( ///
+								(`d1Ad1tet'^2/`A') - `d2Ad2tet'))
 		}
 		if "`copfc'" == "joe"{
-
+			local d2copd2u		(((1-`tet')/ `util')*`d1copd1u' - ((1-`tet')/`A'^(`tettil'))*`d1copd1u'^2)	
+			local d2copd1ud1v	(`A'^(`tettil'-2)*(`util'*`vtil')^(`tet'-1)*(`A'-1+`tet'))
+			local d2copd1ud1tet	(`d1copd1u'*(ln(`util') - (`d1Ad1tet'/`A') ///
+								- ((`vtil'^(`tet')*ln(`vtil'))/(1-`vtil'^(`tet')))) ///
+								- (`d1copd1u'*`d1copd1tet'/`A'^(`tettil')))
+			
+			local d2copd2v		(((1-`tet')/ `vtil')*`d1copd1v' - ((1-`tet')/`A'^(`tettil'))*`d1copd1v'^2)	
+			local d2copd1vd1tet	(`d1copd1v'*(ln(`vtil') - (`d1Ad1tet'/`A') ///
+								- ((`util'^(`tet')*ln(`util'))/(1-`util'^(`tet')))) ///
+								- (`d1copd1v'*`d1copd1tet'/`A'^(`tettil')))
+			
+			local d2copd2tet	(`tettil'*`A'^(`tettil'-1)*((`d1Ad1tet'^2/`A') - `d2Ad2tet') ///
+								- 2*`tettil'*`d1copd1tet' - (`d1copd1tet'^2/`A'^(`tettil')))
 		}
 		if "`copfc'" == "amh"{
-
+			local d2copd2u		(-2*(`tet'*`vtil'/`A')*`d1copd1u')	
+			local d2copd1ud1v	((1/`A') + (`u'*`v'*`tet'/`A'^2) - (`d1copd1u'*`tet'*`util'/`A') ///
+								- (`d1copd1v'*`tet'*`vtil'/`A'))
+			local d2copd1ud1tet	(`d1copd1tet'*((1/`u') - (1/`util') - (2*`tet'*`vtil'/`A')))
+			
+			local d2copd2v		(-2*(`tet'*`util'/`A')*`d1copd1v')	
+			local d2copd1vd1tet	(`d1copd1tet'*((1/`v') - (1/`vtil') - (2*`tet'*`util'/`A')))
+			
+			local d2copd2tet	(`d1copd1tet'*(2*`util'*`vtil'/`A'))
 		}	
 	}
 	
@@ -901,7 +939,6 @@ program define rbicopula_p, eclass
 			}
 			exit
 		}
-		*/
 	}
 	
 	error 198			//	if user specified more than one option	

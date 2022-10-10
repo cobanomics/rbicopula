@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 1.0.0: 31jul2022}{...}
+{* *! version 1.1.0: 10oct2022}{...}
 {vieweralsosee "rbicopula" "help rbicopula"}{...}
 {viewerjumpto "Postestimation commands" "rbicopula postestimation##description"}{...}
 {viewerjumpto "Syntax for predict" "rbicopula postestimation##syntax_predict"}{...}

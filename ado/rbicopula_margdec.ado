@@ -1,4 +1,4 @@
-*! version 1.0.0 , 01aug2022
+*! version 1.1.0 , 10oct2022
 *! Author: Mustafa Coban, Institute for Employment Research (Germany)
 *! Website: mustafacoban.de
 *! Support: mustafa.coban@iab.de
@@ -82,7 +82,7 @@ program define rbicopula_margdec, eclass
 	
 
 	*!	currently not applicable, but in future updates of package
-	if inlist("`e(copula)'","gaussian","gumbel","joe","amh"){
+	if inlist("`e(copula)'","gaussian"){
 		dis as err "{bf:copula(`e(copula)')} currently not applicable for {bf:rbicopula margdec}"
 		dis as txt "Next update of {bf:rbicopula} will provide application."
 		exit 198
